@@ -1,6 +1,6 @@
-﻿# OneITFarm DID Method Specifications
+﻿# WeeLink DID Method Specifications
 ## 1. DID-Auth-Protocol
-This article defines the specifications of OneITFarm DID-Auth-Protocol in detail for users' reference.
+This article defines the specifications of WeeLink DID-Auth-Protocol in detail for users' reference.
 
 ## 2. Table of Contents
 - [DID-Auth-Protocol](#1-did-auth-protocol)
@@ -34,7 +34,7 @@ This article defines the specifications of OneITFarm DID-Auth-Protocol in detail
   - [APIs](#107-apis)
 
 ## 3. Abstract
-OneITFarm DID is a new blockchain-based authentication method that follows all the requirements of W3C. Based on OneITFarm Wallet，our method provides a series of APIs and services for a fast and secure authentication process.
+WeeLink DID is a new blockchain-based authentication method that follows all the requirements of W3C. Based on WeeLink Wallet，our method provides a series of APIs and services for a fast and secure authentication process.
 
 ## 4. Motivation
 The rapid development of Internet has provided unparalled convenience to the public, yet it is also inevitably bringing some potential problems. One of them is the leaking of private information that comes with traditional authentication systems. Taking advantage of blockchain's decentralization and security characteristics, we thus propose our secure authentication method.
@@ -45,10 +45,10 @@ The rapid development of Internet has provided unparalled convenience to the pub
 ### 5.1 Create DID
 #### 1. Generate sercret key
 ##### 1. Choose one directly
-Pick a random secret key or based on those that the entity has ("entity" here refers to OneITFarm Wallet).
+Pick a random secret key or based on those that the entity has ("entity" here refers to WeeLink Wallet).
 
 ##### 2. Create with ``appPk`` (use bip44 to calculate DID)
-> Currently the creation of wallet accounts in OneITFarm Wallet is based on bip44.
+> Currently the creation of wallet accounts in WeeLink Wallet is based on bip44.
 
 - Process ``appDid`` with sh3
 - Acquire the first 64 bits of hash.
@@ -288,11 +288,11 @@ Three processes are involved in using DID for the entire authentication protocol
 ```
 https://wallet.io/i?appPk=zBdZEnbDJTijVVCx4Nx68bzDPPMFwVizSRorvzSS3SGG2&appDid=did:idg:idgNK7PeUtemp5oAhJ4zNmGJ8rUoFnB1CtKfoU&action=requestAuth&url=https://example-application.io/auth/
 ```
-- ``linkPath``: ``linkPath`` is located at the very beginning of a link. In this example, it is ``https://wallet.io/i``, used for locating Wallet. This part is configurable: SDK allows developers to register their own domains for applications. In other words, it is generated through OneITFarm.
+- ``linkPath``: ``linkPath`` is located at the very beginning of a link. In this example, it is ``https://wallet.io/i``, used for locating Wallet. This part is configurable: SDK allows developers to register their own domains for applications. In other words, it is generated through WeeLink.
   - If Wallet hasn't been installed, scanning the code with a third-party application or clicking the url will open an installation page.
   - If Wallet is installed, scanning with the app will obtain underlying parameters.
 - ``apppk``：This is a Base59 encoded public key passed from an application to Wallet.
-- ``appid``：It refers to the app's id in OneITFarm.
+- ``appid``：It refers to the app's id in WeeLink.
 - ``appDid``：The application's DID.
 - ``action``：It is used for telling Wallet what to do next. The action here should be ``requestAuth`` and Wallet will visit the url via ``GET`` method.
 - ``url``：Wallet will use this x-www-form-urlencoded URL to start the Request DID Authentication process.
@@ -688,7 +688,7 @@ Registry blockchain is where application DID registration should take place. As 
 
 #### 1. Wallet APIs
 
-1. Creating a wallet containing public/private keys and address for OneITFarm applications.
+1. Creating a wallet containing public/private keys and address for WeeLink applications.
 2. Encrypting/decrypting auth-token.
 3. Requesting to update and read a DID document.
 
