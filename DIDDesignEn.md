@@ -10,7 +10,7 @@ This article defines the specifications of WeeLink DID-Auth-Protocol in detail f
 - [DID](#5-did)
   - [Create DID](#51-create-did)
   - [Declare DID](#52-declare-did)
-  - [Read DID](/#53-read-did)
+  - [Read DID](#53-read-did)
   - [Update DID](#54-update-did)
   - [Revoke DID](#55-revoke-did)
 - [DID Document](#6-did-document-diddoc)
@@ -53,7 +53,7 @@ Pick a random secret key or based on those that the entity has ("entity" here re
 - Process ``appDid`` with sh3
 - Acquire the first 64 bits of hash.
 - Split the those bits into two 32 bits: ``s1`` and ``s2``
-- Obtain HD secrete key using  `m/44'/ABT'/S1'/S2'/address_index`
+- Obtain HD secrete key using  `m/44'/WLK'/S1'/S2'/address_index`
 
 #### 2. Choose DID type
 
@@ -137,12 +137,12 @@ Put the 4 bytes from Step 8 to the end of hash from Step 6 to get the DID String
 
 #### 10. Encrypt the binary DID String
 
-Encode the binary file with Base58 method and add `idg` before the result to get DID String
-`idgNKtCNqYWLYWYW3gWRA1vnRykfCBZYHZvzKr`
+Encode the binary file with Base58 method and add `ch` before the result to get DID String
+`chNKtCNqYWLYWYW3gWRA1vnRykfCBZYHZvzKr`
 
 #### 11. The complete DID should look like this:
 
-`did:idg:idgNKtCNqYWLYWYW3gWRA1vnRykfCBZYHZvzKr`
+`did:wlk:chNKtCNqYWLYWYW3gWRA1vnRykfCBZYHZvzKr`
 
 ### 5.2 Declare DID
 
@@ -171,12 +171,11 @@ DeclareDID is done by sending a transaction to the blockchain. Here's a sample t
 }
 
 ```
-:::tip
-This is essentially putting the DID document on the blockchain.
-:::
+> This is essentially putting the DID document on the blockchain.
+
 ### 5.3 Read DID
 
-Reading DID is as simple as sending a GRPC request to ABT network. The following is a description of the request's structure. `address` field is the DID to query. The omission of `keys` field will return the entire account status. `height` field can be used to locate DID documents of previous versions. If omitted, the latest document will be returned.
+Reading DID is as simple as sending a GRPC request to WLK network. The following is a description of the request's structure. `address` field is the DID to query. The omission of `keys` field will return the entire account status. `height` field can be used to locate DID documents of previous versions. If omitted, the latest document will be returned.
 
 ```js
 message RequestGetAccountState {
@@ -250,9 +249,8 @@ When the DID has been successfully created, it's time to create a corresponding 
 }
 
 ```
-:::tip
-1. DID and the public key corresponding to its signature should be stored when a DID is created for the first time.
-:::
+> 1. DID and the public key corresponding to its signature should be stored when a DID is created for the first time.
+
 ### 6.2. Declare DID Document
 
 The DID Document should be published to the chain after creation.
@@ -286,7 +284,7 @@ Three processes are involved in using DID for the entire authentication protocol
 
 #### 1. Here's an example of using QR code or ``deep link``
 ```
-https://wallet.io/i?appPk=zBdZEnbDJTijVVCx4Nx68bzDPPMFwVizSRorvzSS3SGG2&appDid=did:idg:idgNK7PeUtemp5oAhJ4zNmGJ8rUoFnB1CtKfoU&action=requestAuth&url=https://example-application.io/auth/
+https://wallet.io/i?appPk=zBdZEnbDJTijVVCx4Nx68bzDPPMFwVizSRorvzSS3SGG2&appDid=did:wlk:chNK7PeUtemp5oAhJ4zNmGJ8rUoFnB1CtKfoU&action=requestAuth&url=https://example-application.io/auth/
 ```
 - ``linkPath``: ``linkPath`` is located at the very beginning of a link. In this example, it is ``https://wallet.io/i``, used for locating Wallet. This part is configurable: SDK allows developers to register their own domains for applications. In other words, it is generated through WeeLink.
   - If Wallet hasn't been installed, scanning the code with a third-party application or clicking the url will open an installation page.
@@ -309,14 +307,14 @@ GET https://example-application.io/auth?userDid=encrypted_userDid
 1. ``appPk``：application's Base58-encoded public key
 2. ``authInfo``：signed object in JWT format
 
-::: tip An example:
+> An example:
 ```json
  {
    "appPk": "zBdZEnbDJTijVVCx4Nx68bzDPPMFwVizSRorvzSS3SGG2",
    "authInfo": "eyJhbGciOiJFZDI1NTE5IiwidHlwIjoiSldUIn0.eyJleHAiOjE1NDg4MDM0MjIsImlhdCI6MTU0ODcwMzQyMiwiaXNzIjoiZGlkOmFidDp6Tkt0Q05xWVdMWVdZVzNnV1JBMXZuUnlrZkNCWllIWnZ6S3IiLCJuYmYiOjE1NDg3MDM0MjIsInJlcXVlc3RlZENsYWltcyI6eyJkb2N1bWVudHMiOlt7Imhhc2giOiJUaGUgaGFzaCBvZiB0aGUgZG9jdW1lbnQncyBjb250ZW50IiwidXJpIjoiaHR0cHM6Ly9kb2N1bWVudC0xLmlvIn0seyJoYXNoIjoiVGhlIGhhc2ggb2YgdGhlIGRvY3VtZW50J3MgY29udGVudCIsInVyaSI6ImlwZnM6Ly9kb2N1bWVudC0yIn1dLCJwcm9maWxlIjpbImZ1bGxOYW1lIiwicGhvbmUiLCJzaGlwcGluZ0FkZHJlc3MiXSwicHJvb2ZPZkhvbGRpbmciOlt7InRva2VuIjoidG9rZW4gbmFtZSAxIiwidmFsdWUiOjE4MDAwMDB9LHsidG9rZW4iOiJ0b2tlbiBuYW1lIDIiLCJ2YWx1ZSI6MTAwMDAwMH1dfSwicmVzcG9uc2VBdXRoVXJpIjoiaHR0cHM6Ly9leGFtcGxlLWFwcGxpY2F0aW9uL3Jlc3BvbnNlLWF1dGgifQ.RasZv6ydSxOBj3H726P8THeo4K4IAd7wapqrdE4hrOVRONByAHYK1kr7uAXASc_-Mw9ShD3IcqAuwnLiEkvHCQ"
  }
 ```
-:::
+
 
 The header and body of ``authInfo`` shown above can be decoded into:
 
@@ -326,7 +324,7 @@ The header and body of ``authInfo`` shown above can be decoded into:
    "typ": "JWT"
  }
  {
-   "iss": "did:abt:zNKtCNqYWLYWYW3gWRA1vnRykfCBZYHZvzKr",
+   "iss": "did:wlk:zNKtCNqYWLYWYW3gWRA1vnRykfCBZYHZvzKr",
    "iat": 1548703422,
    "nbf": 1548703422,
    "exp": 1548803422,
@@ -380,7 +378,7 @@ The header and body of ``authInfo`` shown above can be decoded into:
   1. Verify that ``iat`` is after sending the request. 
   2. Verify that the response is expired with ``exp``.
   3. Verify that the signature matches ``appPk`` and ``appPk`` matches ``appDid`` in ``iss`` field
-  4. Wallet can (may under a user's request) request the application's metadata, such as ``trustLevel``, from a registery blockchain. WellLink provides ABT chain as a registery chain.
+  4. Wallet can (may under a user's request) request the application's metadata, such as ``trustLevel``, from a registery blockchain. WellLink provides WLK chain as a registery chain.
   5. Wallet can use ``trustLevel`` when displaying requested claim to user. Wallet should display a high risk mark on the entire page for applications whose ``appDid`` cannot be found on registery blockchain. High risk marks should also be displayed on application-requested verifiable claims whose required ``trustLevel`` is higher than ``appDid``.
 ### 7.3 Response DID Authentication
 This is the last process of the entire workflow. Depending on whether the application is asking for verifiable claims, Wallet will either prompt users to fill in those claims and go to responseAuth endpoint or to go to the endpoint directly.
@@ -457,7 +455,7 @@ This is the last process of the entire workflow. Depending on whether the applic
  {
    "exp": "1548898839",
    "iat": "1548897039",
-   "iss": "did:abt:zNKtCNqYWLYWYW3gWRA1vnRykfCBZYHZvzKr",
+   "iss": "did:wlk:zNKtCNqYWLYWYW3gWRA1vnRykfCBZYHZvzKr",
    "nbf": "1548897039"
  }
 ```
@@ -473,7 +471,7 @@ The ways of creating, registering and managing DIDs in DID methods are designed 
 
 - Keep personally-identifiable information (PII) off-ledger. Chains store signatures, not PII. A claim verifier asks the peer to be verified for the original data.
 
-- DID Correlation Risks and Pseudonymous DIDs. Shown in the first step of [Request DID Authentication](/idg/DIDDesign.html#_1-2-request-did-authentication), generating application-specific DID  enforces pseudonymous DID and privacy across chains. A user might have multiple extended DIDs under one master DID and use those extended DIDs on different chains. The master DID would never, through any means, be exposed.
+- DID Correlation Risks and Pseudonymous DIDs. Shown in the first step of [Request DID Authentication](#72-request-did-authentication), generating application-specific DID  enforces pseudonymous DID and privacy across chains. A user might have multiple extended DIDs under one master DID and use those extended DIDs on different chains. The master DID would never, through any means, be exposed.
 
 - DID Document Correlation Risks are lowered by isolating DID documents corresponding to extended DIDs of the same master DID.
 
