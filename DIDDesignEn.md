@@ -60,38 +60,32 @@ Pick a random secret key or based on those that the entity has ("entity" here re
 Choose `RoleType`,`KeyType` and `HashType`. DID is the first two bytes of of DID string in binary format. DID Type consists of the following three parts.
 
 1. `RoleType`：first six bits
-
-> To be expanded in the future.
-
-- account = 0
-- node = 1
-- device = 2
-- application = 3
-- smart_contract = 4
-- bot = 5
-- asset = 6
-- stake = 7
-- validator = 8
-- group = 9
-- any = 63
+  > To be expanded in the future.
+  - account = 0
+  - node = 1
+  - device = 2
+  - application = 3
+  - smart_contract = 4
+  - bot = 5
+  - asset = 6
+  - stake = 7
+  - validator = 8
+  - group = 9
+  - any = 63
 
 2. `KeyType`：middle five bits
-
-> Used for specifying the algorithm that converts secret keys to public keys.
-
-- ED25519 = 0
-- SECP256K1 = 1
+  > Used for specifying the algorithm that converts secret keys to public keys.
+  - ED25519 = 0
+  - SECP256K1 = 1
 
 3. `Hash`：last five bits
-
-> Used for calculating public key hash function.
-
-- keccak = 0
-- sha3 = 1
-- keccak_384 = 2
-- sha3_384 = 3
-- keccak_512 = 4
-- sha3_512 = 5
+  > Used for calculating public key hash function.
+  - keccak = 0
+  - sha3 = 1
+  - keccak_384 = 2
+  - sha3_384 = 3
+  - keccak_512 = 4
+  - sha3_512 = 5
 
 As an example, DID Type `0x0C01` can be decoded like the following
 
