@@ -44,10 +44,10 @@ The rapid development of Internet has provided unparalled convenience to the pub
 
 ### 5.1 Create DID
 #### 1. Generate sercret key
-##### 1. Choose one directly
+1. Choose one directly
 Pick a random secret key or based on those that the entity has ("entity" here refers to WeeLink Wallet).
 
-##### 2. Create with ``appPk`` (use bip44 to calculate DID)
+2. Create with ``appPk`` (use bip44 to calculate DID)
 > Currently the creation of wallet accounts in WeeLink Wallet is based on bip44.
 
 - Process ``appDid`` with sh3
@@ -380,7 +380,7 @@ The header and body of ``authInfo`` shown above can be decoded into:
   3. Verify that the signature matches ``appPk`` and ``appPk`` matches ``appDid`` in ``iss`` field
   4. Wallet can (may under a user's request) request the application's metadata, such as ``trustLevel``, from a registery blockchain. WellLink provides WLK chain as a registery chain.
   5. Wallet can use ``trustLevel`` when displaying requested claim to user. Wallet should display a high risk mark on the entire page for applications whose ``appDid`` cannot be found on registery blockchain. High risk marks should also be displayed on application-requested verifiable claims whose required ``trustLevel`` is higher than ``appDid``.
-  
+
 ### 7.3 Response DID Authentication
 This is the last process of the entire workflow. Depending on whether the application is asking for verifiable claims, Wallet will either prompt users to fill in those claims and go to responseAuth endpoint or to go to the endpoint directly.
 
