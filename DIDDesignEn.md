@@ -380,6 +380,7 @@ The header and body of ``authInfo`` shown above can be decoded into:
   3. Verify that the signature matches ``appPk`` and ``appPk`` matches ``appDid`` in ``iss`` field
   4. Wallet can (may under a user's request) request the application's metadata, such as ``trustLevel``, from a registery blockchain. WellLink provides WLK chain as a registery chain.
   5. Wallet can use ``trustLevel`` when displaying requested claim to user. Wallet should display a high risk mark on the entire page for applications whose ``appDid`` cannot be found on registery blockchain. High risk marks should also be displayed on application-requested verifiable claims whose required ``trustLevel`` is higher than ``appDid``.
+  
 ### 7.3 Response DID Authentication
 This is the last process of the entire workflow. Depending on whether the application is asking for verifiable claims, Wallet will either prompt users to fill in those claims and go to responseAuth endpoint or to go to the endpoint directly.
 
