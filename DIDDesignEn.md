@@ -34,7 +34,7 @@ This article defines the specifications of Weelink DID-Auth-Protocol in detail f
   - [APIs](#107-apis)
 
 ## 3. Abstract
-Weelink DID is a new blockchain-based authentication method that follows all the requirements of W3C. Based on Weelink Wallet，our method provides a series of APIs and services for a fast and secure authentication process.
+Weelink DID is a new blockchain-based authentication method that follows all the requirements of W3C. Based on Weelink Wallet, our method provides a series of APIs and services for a fast and secure authentication process.
 
 ## 4. Motivation
 The rapid development of Internet has provided unparalled convenience to the public, yet it is also inevitably bringing some potential problems. One of them is the leaking of private information that comes with traditional authentication systems. Taking advantage of blockchain's decentralization and security characteristics, we thus propose our secure authentication method.
